@@ -16,32 +16,41 @@ module.exports = async function(context, myTimer) {
   });
 
   function sortAndSaveTweets(tweets) {
-    const filterdTweets = tweets.filter(
-      tweet => tweet.in_reply_to_status_id === null
-    );
+    context.log("tweets here", tweets);
+    const filterdTweets =
+      Array.isArray(tweets) &&
+      tweets.filter(tweet => tweet.in_reply_to_status_id === null);
     TweetDbService.saveTweets(filterdTweets)
       .then(res => context.log("tweets saved", res))
-      .catch(error => context.log("error on saving tweet", error));
+      .catch(error => context.error("error on saving tweet", error));
   }
 
   function getTweetByHandle(user) {
     try {
-      let params = { q: `${user.handle}`, count: 5 };
-      client.get("search/tweets", params, (error, tweets) => {
+      let params = { q: user.handle || "@itsmeshrjan" };
+      client.get("search/tweets", params, function(error, tweets, response) {
         if (!error) {
           sortAndSaveTweets(tweets);
+        } else {
+          throw new Error(
+            `Error occured while fetching tweets STACK: ${error}`
+          );
         }
-        throw new Error("Error occured while fetching tweets", error);
       });
     } catch (error) {
-      context.log(error);
+      context.error(error);
     }
   }
 
-  const twitterHandles = await TweetDbService.getTwitterHandles();
-  if (twitterHandles) {
-    twitterHandles.forEach(user => {
-      getTweetByHandle(user);
-    });
+  try {
+    const twitterHandles = await TweetDbService.getTwitterHandles();
+    if (twitterHandles) {
+      twitterHandles.forEach(user => {
+        context.log("user here", user);
+        getTweetByHandle(user);
+      });
+    }
+  } catch (error) {
+    context.error(error);
   }
 };
