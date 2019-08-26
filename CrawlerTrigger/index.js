@@ -1,6 +1,6 @@
 module.exports = function(context) {
   var timeStamp = new Date().toISOString();
-  // context.log('Crawler Started.!', timeStamp);
+  context.log("Crawler Started.!", timeStamp);
 
   const { newsDbService } = require("nepaltoday-db-service");
   const Crawler = require("crawler");
@@ -76,7 +76,9 @@ module.exports = function(context) {
       }
     });
 
-    return newsDbService.saveArticles(newscollection).catch(error => {});
+    return newsDbService
+      .saveArticles(newscollection)
+      .catch(error => context.log(error));
   }
 
   /************************************************
@@ -116,7 +118,9 @@ module.exports = function(context) {
       }
     });
 
-    return newsDbService.saveArticles(newscollection).catch(error => {});
+    return newsDbService
+      .saveArticles(newscollection)
+      .catch(error => context.log(error));
   }
 
   /************************************************
@@ -178,7 +182,9 @@ module.exports = function(context) {
       }
     });
 
-    return newsDbService.saveArticles(newscollection).catch(error => {});
+    return newsDbService
+      .saveArticles(newscollection)
+      .catch(error => context.log(error));
   }
 
   /************************************************
@@ -257,7 +263,9 @@ module.exports = function(context) {
         }
       });
 
-    return newsDbService.saveArticles(newscollection).catch(error => {});
+    return newsDbService
+      .saveArticles(newscollection)
+      .catch(error => context.log(error));
   }
 
   function findSourceIdByLink(link) {
@@ -272,7 +280,7 @@ module.exports = function(context) {
     // This will be called for each crawled page
     callback: function(error, res, done) {
       if (error) {
-        context.log("error");
+        context.log(error);
       } else {
         context.log("parsing ", res.connection._host);
         if (res.connection._host.includes("kantipurdaily.com")) {
@@ -310,7 +318,7 @@ module.exports = function(context) {
 
   // global unhandledRejection handler
   process.on("unhandledRejection", error => {
-    // context.log('unhandledRejection', error);
+    context.log("unhandledRejection", error);
   });
 
   /************************************************
@@ -320,7 +328,7 @@ module.exports = function(context) {
     newsSources = sources;
 
     sources.forEach(source => {
-      // context.log(source.link);
+      context.log(source.link);
       c.queue(source.link);
     });
   });

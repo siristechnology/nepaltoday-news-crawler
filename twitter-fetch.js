@@ -2,7 +2,9 @@ const Twitter = require("twitter");
 const {
   TWITTER_CONSUMER_KEY,
   TWITTER_CONSUMER_SECRET,
-  BEARER_ACCESS_TOKEN
+  BEARER_ACCESS_TOKEN,
+  TWITTER_ACCESS_TOKEN,
+  TWITTER_ACCESS_TOKEN_SECRET
 } = require("./config/env");
 
 const client = new Twitter({
@@ -11,8 +13,8 @@ const client = new Twitter({
   bearer_token: BEARER_ACCESS_TOKEN
 });
 
-var params = { screen_name: "nodejs" };
-client.get("statuses/user_timeline", params, function(error, tweets, response) {
+var params = { q: "@kpsharmaoli" };
+client.get("search/tweets", params, function(error, tweets, response) {
   if (error) {
     console.log("errors here", error);
   } else {

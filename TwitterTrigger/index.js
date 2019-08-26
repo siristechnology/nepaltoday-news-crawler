@@ -6,33 +6,42 @@ module.exports = async function(context, myTimer) {
   const {
     TWITTER_CONSUMER_KEY,
     TWITTER_CONSUMER_SECRET,
-    TWITTER_TOKEN_SECRET,
-    TWITTER_ACCESS_TOKEN
+    BEARER_ACCESS_TOKEN
   } = require("../config/env");
 
   const client = new Twitter({
     consumer_key: TWITTER_CONSUMER_KEY,
     consumer_secret: TWITTER_CONSUMER_SECRET,
-    access_token_key: TWITTER_ACCESS_TOKEN,
-    access_token_secret: TWITTER_TOKEN_SECRET
+    bearer_token: BEARER_ACCESS_TOKEN
   });
 
-  context.log("");
+  function sortAndSaveTweets(tweets) {
+    const filterdTweets = tweets.filter(
+      tweet => tweet.in_reply_to_status_id === null
+    );
+    TweetDbService.saveTweets(filterdTweets)
+      .then(res => context.log("tweets saved", res))
+      .catch(error => context.log("error on saving tweet", error));
+  }
 
-  async function getTweetByHandle(handle) {
-    // use api to get latest tweet
-    var params = { screen_name: "nodejs" };
-    const tweet = await client.get("statuses/user_timeline", params);
-    context.log("Tweeter feed", tweet);
+  function getTweetByHandle(user) {
+    try {
+      let params = { q: `${user.handle}`, count: 5 };
+      client.get("search/tweets", params, (error, tweets) => {
+        if (!error) {
+          sortAndSaveTweets(tweets);
+        }
+        throw new Error("Error occured while fetching tweets", error);
+      });
+    } catch (error) {
+      context.log(error);
+    }
   }
 
   const twitterHandles = await TweetDbService.getTwitterHandles();
   if (twitterHandles) {
     twitterHandles.forEach(user => {
-      getTweetByHandle(user.handle);
+      getTweetByHandle(user);
     });
   }
-  //use twitter api library to get tweets
-  //sort tweets using algorithm
-  //store tweets in mongodb using db-service
 };
