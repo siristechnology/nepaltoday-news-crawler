@@ -1,0 +1,11 @@
+require("dotenv").config();
+
+const TWITTER_CONSUMER_KEY = process.env.CONSUMER_KEY;
+const TWITTER_CONSUMER_SECRET = process.env.CUTOMER_SECRET;
+const BEARER_ACCESS_TOKEN = process.env.BEARER_ACCESS_TOKEN;
+
+module.exports = {
+  TWITTER_CONSUMER_KEY,
+  TWITTER_CONSUMER_SECRET,
+  BEARER_ACCESS_TOKEN
+};
