@@ -17,6 +17,7 @@
   "author": "NepalToday",
   "license": "ISC",
   "dependencies": {
+    "@postlight/mercury-parser": "^2.1.1",
     "crawler": "^1.2.0",
     "dotenv": "^8.1.0",
     "ip": "1.1.5",

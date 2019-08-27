@@ -15,22 +15,23 @@ module.exports = async function(context, myTimer) {
     bearer_token: BEARER_ACCESS_TOKEN
   });
 
-  function sortAndSaveTweets(tweets) {
-    context.log("tweets here", tweets);
-    const filterdTweets =
-      Array.isArray(tweets) &&
-      tweets.filter(tweet => tweet.in_reply_to_status_id === null);
-    TweetDbService.saveTweets(filterdTweets)
-      .then(res => context.log("tweets saved", res))
-      .catch(error => context.error("error on saving tweet", error));
+  async function sortAndSaveTweets(tweets) {
+    const filterdTweets = Array.from(tweets).filter(
+      tweet => tweet.in_reply_to_status_id === null
+    );
+    const savedTweets = await TweetDbService.saveTweets(filterdTweets);
+    if (savedTweets) {
+      context.done();
+    }
   }
 
   function getTweetByHandle(user) {
     try {
-      let params = { q: user.handle || "@itsmeshrjan" };
+      let params = { q: `${user.handle}` };
       client.get("search/tweets", params, function(error, tweets, response) {
         if (!error) {
-          sortAndSaveTweets(tweets);
+          context.log("tweets in --", tweets);
+          sortAndSaveTweets(tweets.statuses);
         } else {
           throw new Error(
             `Error occured while fetching tweets STACK: ${error}`
