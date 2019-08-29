@@ -10,10 +10,6 @@ module.exports = async function(context, myTimer) {
     context.log("JavaScript is running late!");
   }
 
-  /**
-   * GETTTING ALL SOURCES
-   */
-
   try {
     const sources = await newsDbService.getAllSources();
     if (sources) {
