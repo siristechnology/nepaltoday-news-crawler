@@ -21,7 +21,8 @@
     "crawler": "^1.2.0",
     "dotenv": "^8.1.0",
     "ip": "1.1.5",
-    "nepaltoday-db-service": "github:siristechnology/nepaltoday-db-service",
+    "nepaltoday-db-service": "github:siristechnology/nepaltoday-db-service#NEP-21-modify-twitter-schema",
+    "puppeteer": "^1.19.0",
     "twitter": "^1.7.1"
   },
   "devDependencies": {
