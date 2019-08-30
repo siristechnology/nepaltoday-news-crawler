@@ -23,7 +23,7 @@ module.exports = async function(context, myTimer) {
             const categoryName = category.name;
             const url = `${baseUrl}${category.path}`;
             const newsLinks = await scrapeNewsLink(baseUrl, url);
-            if (newsLinks) {
+            if (Array.isArray(newsLinks) && newsLinks.length > 0) {
               //   console.log("news link", newsLinks);
               newsLinks.map(async link => {
                 const content = await scrapeNewsContent(

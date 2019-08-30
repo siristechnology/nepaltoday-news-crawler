@@ -10,7 +10,7 @@ const scrapeNewsContent = async (link, logoLink) => {
         content: null,
         link: scrappedNews.url || link,
         imageLink: scrappedNews.lead_image_url || logoLink,
-        publishedDate: scrappedNews.date_published
+        publishedDate: scrappedNews.date_published || new Date()
       };
     }
     return {};

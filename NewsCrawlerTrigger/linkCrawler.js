@@ -1,11 +1,18 @@
 const puppeteer = require("puppeteer");
+process.setMaxListeners(Infinity);
 const { newsPortalLink } = require("../constants/portal");
 const { KANTIPUR, SETOPATI, RATOPATI, DAINIK_KHABAR } = newsPortalLink;
 
 const scrapeNewsLink = (baseUrl, url) => {
   switch (baseUrl) {
+    case KANTIPUR:
+      return scrapeKantipurNewsLink(url);
     case SETOPATI:
       return scrapeSetoPatiLink(url);
+    case RATOPATI:
+      return scrapeRatoPatiLink(url);
+    case DAINIK_KHABAR:
+      return scrapeDainikNepalLinks(url);
     default:
       return null;
   }
@@ -15,7 +22,7 @@ const scrapeKantipurNewsLink = async url => {
   try {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    await page.goto(url);
+    await page.goto(url, { timeout: 0 });
 
     const scrapedData = await page.evaluate(() =>
       Array.from(document.querySelectorAll("article > h1, h2 > a "))
@@ -24,18 +31,18 @@ const scrapeKantipurNewsLink = async url => {
           url: `https://ekantipur.com${link.getAttribute("href")}`
         }))
     );
-
+    await page.close();
     await browser.close();
     return scrapedData;
   } catch (error) {
-    throw new Error(error);
+    return `error occured :: ${error}`;
   }
 };
 const scrapeSetoPatiLink = async url => {
   try {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    await page.goto(url);
+    await page.goto(url, { timeout: 0 });
 
     const scrapedData = await page.evaluate(() =>
       Array.from(document.querySelectorAll(".big-feature > a, .items > a "))
@@ -45,30 +52,32 @@ const scrapeSetoPatiLink = async url => {
         }))
     );
 
+    await page.close();
     await browser.close();
     return scrapedData;
   } catch (error) {
-    throw new Error(error);
+    return `error occured :: ${error}`;
   }
 };
 const scrapeRatoPatiLink = async url => {
   try {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    await page.goto(url);
+    await page.goto(url, { timeout: 0 });
 
     const scrapedData = await page.evaluate(() =>
-      Array.from(document.querySelectorAll("article > h1, h2 > a "))
+      Array.from(document.querySelectorAll(".item-content  a"))
         .slice(0, 1)
         .map(link => ({
           url: `https://ratopati.com${link.getAttribute("href")}`
         }))
     );
 
+    await page.close();
     await browser.close();
     return scrapedData;
   } catch (error) {
-    throw new Error(error);
+    return `error occured :: ${error}`;
   }
 };
 
@@ -76,20 +85,21 @@ const scrapeDainikNepalLinks = async url => {
   try {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    await page.goto(url);
+    await page.goto(url, { timeout: 0 });
 
     const scrapedData = await page.evaluate(() =>
-      Array.from(document.querySelectorAll("article > h1, h2 > a "))
+      Array.from(document.querySelectorAll(".news_loop a"))
         .slice(0, 1)
         .map(link => ({
-          url: `https://dainiknepal.com${link.getAttribute("href")}`
+          url: link.getAttribute("href")
         }))
     );
 
+    await page.close();
     await browser.close();
     return scrapedData;
   } catch (error) {
-    throw new Error(error);
+    return `error occured :: ${error}`;
   }
 };
 
