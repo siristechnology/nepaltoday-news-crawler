@@ -33,9 +33,15 @@ const scrapeKantipurNewsLink = async url => {
     );
     await page.close();
     await browser.close();
-    return scrapedData;
-  } catch (error) {
-    return `error occured :: ${error}`;
+    return { error: false, data: scrapedData };
+  } catch (err) {
+    return {
+      error: {
+        status: true,
+        stack: err
+      },
+      data: null
+    };
   }
 };
 const scrapeSetoPatiLink = async url => {
@@ -54,9 +60,15 @@ const scrapeSetoPatiLink = async url => {
 
     await page.close();
     await browser.close();
-    return scrapedData;
-  } catch (error) {
-    return `error occured :: ${error}`;
+    return { error: false, data: scrapedData };
+  } catch (err) {
+    return {
+      error: {
+        status: true,
+        stack: err
+      },
+      data: null
+    };
   }
 };
 const scrapeRatoPatiLink = async url => {
@@ -75,9 +87,15 @@ const scrapeRatoPatiLink = async url => {
 
     await page.close();
     await browser.close();
-    return scrapedData;
-  } catch (error) {
-    return `error occured :: ${error}`;
+    return { error: false, data: scrapedData };
+  } catch (err) {
+    return {
+      error: {
+        status: true,
+        stack: err
+      },
+      data: null
+    };
   }
 };
 
@@ -97,9 +115,15 @@ const scrapeDainikNepalLinks = async url => {
 
     await page.close();
     await browser.close();
-    return scrapedData;
-  } catch (error) {
-    return `error occured :: ${error}`;
+    return { error: false, data: scrapedData };
+  } catch (err) {
+    return {
+      error: {
+        status: true,
+        stack: err
+      },
+      data: null
+    };
   }
 };
 

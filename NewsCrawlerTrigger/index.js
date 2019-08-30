@@ -22,10 +22,13 @@ module.exports = async function(context, myTimer) {
           categories.map(async category => {
             const categoryName = category.name;
             const url = `${baseUrl}${category.path}`;
-            const newsLinks = await scrapeNewsLink(baseUrl, url);
-            if (Array.isArray(newsLinks) && newsLinks.length > 0) {
+            const { error, data } = await scrapeNewsLink(baseUrl, url);
+            if (error) {
+              throw new Error(error);
+            }
+            if (Array.isArray(data) && data.length > 0) {
               //   console.log("news link", newsLinks);
-              newsLinks.map(async link => {
+              data.map(async link => {
                 const content = await scrapeNewsContent(
                   `${link.url}`,
                   logoLink
@@ -50,8 +53,9 @@ module.exports = async function(context, myTimer) {
       });
     }
   } catch (error) {
-    context.error("error occured here", error);
+    context.log("error occured here", error);
   }
 
   context.log("JavaScript timer trigger function ran!", timeStamp);
+  context.done();
 };
