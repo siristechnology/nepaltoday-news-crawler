@@ -15,20 +15,35 @@ module.exports = async function(context, myTimer) {
     if (sources) {
       sources.map(async source => {
         const sourceId = source._id;
-        const newsLinks = await scrapeNewsLink(source.link);
-        if (newsLinks) {
-          newsLinks.map(async link => {
-            const content = await scrapeNewsContent(`${link.url}`);
-            if (content && content.title && sourceId) {
-              content.source = sourceId;
-              content.createdDate = new Date();
-              content.modifiedDate = new Date();
-              content.isHeadline = true; // TODO: check if h1 or h2
-              content.hostIp = ipAddress;
-              const savedArticle = await newsDbService.saveArticle(content);
-              if (savedArticle) {
-                context.log("article saved successfully!!!!");
-              }
+        const baseUrl = source.link;
+        const logoLink = source.logoLink;
+        const categories = source.category;
+        if (categories) {
+          categories.map(async category => {
+            const categoryName = category.name;
+            const url = `${baseUrl}${category.path}`;
+            const newsLinks = await scrapeNewsLink(baseUrl, url);
+            if (newsLinks) {
+              //   console.log("news link", newsLinks);
+              newsLinks.map(async link => {
+                const content = await scrapeNewsContent(
+                  `${link.url}`,
+                  logoLink
+                );
+                if (content && content.title && sourceId) {
+                  content.source = sourceId;
+                  content.createdDate = new Date();
+                  content.modifiedDate = new Date();
+                  content.isHeadline = true; // TODO: check if h1 or h2
+                  content.hostIp = ipAddress;
+                  content.category = categoryName;
+                  //   console.log("content", content);
+                  const savedArticle = await newsDbService.saveArticle(content);
+                  if (savedArticle) {
+                    context.log("article saved successfully!!!!");
+                  }
+                }
+              });
             }
           });
         }

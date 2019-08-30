@@ -1,3 +1,3 @@
-var twitterRunner = require("./NewsCrawlerTrigger");
+var newsCrawler = require("./NewsCrawlerTrigger");
 
-twitterRunner(console, {});
+newsCrawler(console, {});

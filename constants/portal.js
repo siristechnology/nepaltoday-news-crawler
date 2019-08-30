@@ -1,5 +1,5 @@
 const newsPortalLink = {
-  KANTIPUR: "https://kantipurdaily.com",
+  KANTIPUR: "https://ekantipur.com",
   RATOPATI: "https://ratopati.com",
   SETOPATI: "https://setopati.com",
   DAINIK_KHABAR: "https://dainiknepal.com"
