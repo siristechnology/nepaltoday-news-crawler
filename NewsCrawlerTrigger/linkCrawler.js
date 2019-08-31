@@ -49,33 +49,25 @@ const scrapeKantipurNewsLink = async url => {
 		}
 	}
 }
+
 const scrapeSetoPatiLink = async url => {
-	try {
-		const browser = await puppeteer.launch()
-		const page = await browser.newPage()
-		await page.goto(url, { timeout: 0 })
+	const browser = await puppeteer.launch()
+	const page = await browser.newPage()
+	await page.goto(url, { timeout: 0 })
 
-		const scrapedData = await page.evaluate(() =>
-			Array.from(document.querySelectorAll('.big-feature > a, .items > a '))
-				.slice(0, 1)
-				.map(link => ({
-					url: link.getAttribute('href')
-				}))
-		)
+	const scrapedData = await page.evaluate(() =>
+		Array.from(document.querySelectorAll('.big-feature > a, .items > a '))
+			.slice(0, 1)
+			.map(link => ({
+				url: link.getAttribute('href')
+			}))
+	)
 
-		await page.close()
-		await browser.close()
-		return { error: false, links: scrapedData }
-	} catch (err) {
-		return {
-			error: {
-				status: true,
-				stack: err
-			},
-			links: null
-		}
-	}
+	await page.close()
+	await browser.close()
+	return { error: false, links: scrapedData }
 }
+
 const scrapeRatoPatiLink = async url => {
 	try {
 		const browser = await puppeteer.launch()
