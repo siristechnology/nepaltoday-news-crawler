@@ -1505,9 +1505,9 @@ natural-compare@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
 
-"nepaltoday-db-service@github:siristechnology/nepaltoday-db-service#1.1.2":
-  version "1.1.2"
-  resolved "https://codeload.github.com/siristechnology/nepaltoday-db-service/tar.gz/d18f1cabb92b82ed80e8d19c876d2a1fa2ef6aaf"
+"nepaltoday-db-service@github:siristechnology/nepaltoday-db-service#1.1.3":
+  version "1.1.3"
+  resolved "https://codeload.github.com/siristechnology/nepaltoday-db-service/tar.gz/cf06e4690bee8527016a188fcee961184bdba764"
   dependencies:
     "@babel/polyfill" "7.4.4"
     dotenv "^8.1.0"
