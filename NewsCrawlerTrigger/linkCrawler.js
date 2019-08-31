@@ -3,7 +3,7 @@ process.setMaxListeners(Infinity)
 const { newsPortalLink } = require('../constants/portal')
 const { KANTIPUR, SETOPATI, RATOPATI, DAINIK_KHABAR } = newsPortalLink
 
-const scrapeNewsLink = (baseUrl, url) => {
+const scrapeNewsLink = async (baseUrl, url) => {
 	switch (baseUrl) {
 		case KANTIPUR:
 			return scrapeKantipurNewsLink(url)
@@ -18,7 +18,7 @@ const scrapeNewsLink = (baseUrl, url) => {
 				error: {
 					status: true
 				},
-				data: null
+				links: null
 			}
 	}
 }
@@ -38,14 +38,14 @@ const scrapeKantipurNewsLink = async url => {
 		)
 		await page.close()
 		await browser.close()
-		return { error: false, data: scrapedData }
+		return { error: false, links: scrapedData }
 	} catch (err) {
 		return {
 			error: {
 				status: true,
 				stack: err
 			},
-			data: null
+			links: null
 		}
 	}
 }
@@ -65,14 +65,14 @@ const scrapeSetoPatiLink = async url => {
 
 		await page.close()
 		await browser.close()
-		return { error: false, data: scrapedData }
+		return { error: false, links: scrapedData }
 	} catch (err) {
 		return {
 			error: {
 				status: true,
 				stack: err
 			},
-			data: null
+			links: null
 		}
 	}
 }
@@ -92,14 +92,14 @@ const scrapeRatoPatiLink = async url => {
 
 		await page.close()
 		await browser.close()
-		return { error: false, data: scrapedData }
+		return { error: false, links: scrapedData }
 	} catch (err) {
 		return {
 			error: {
 				status: true,
 				stack: err
 			},
-			data: null
+			links: null
 		}
 	}
 }
@@ -120,14 +120,14 @@ const scrapeDainikNepalLinks = async url => {
 
 		await page.close()
 		await browser.close()
-		return { error: false, data: scrapedData }
+		return { error: false, links: scrapedData }
 	} catch (err) {
 		return {
 			error: {
 				status: true,
 				stack: err
 			},
-			data: null
+			links: null
 		}
 	}
 }

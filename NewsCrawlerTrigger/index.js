@@ -33,7 +33,6 @@ module.exports = async function(context, myTimer) {
 						context.log('Printing links', links)
 
 						if (Array.isArray(links) && links.length > 0) {
-							//   console.log("news link", newsLinks);
 							for (const link of links) {
 								const content = await scrapeNewsContent(`${link.url}`, logoLink)
 								if (content && content.title && sourceId) {
