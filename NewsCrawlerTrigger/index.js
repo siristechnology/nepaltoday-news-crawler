@@ -13,21 +13,28 @@ module.exports = async function(context, myTimer) {
 	try {
 		const sources = await newsDbService.getAllSources()
 		if (sources) {
-			sources.map(async source => {
+			for (const source of sources) {
 				const sourceId = source._id
 				const baseUrl = source.link
 				const logoLink = source.logoLink
 				const categories = source.category
 
 				if (categories) {
-					categories.map(async category => {
+					context.log('Printing categories', categories)
+					context.log('Printing categories.length', categories.length)
+
+					for (const category of categories) {
+						context.log('Printing category', category)
+
 						const categoryName = category.name
 						const url = `${baseUrl}${category.path}`
-						const { data } = await scrapeNewsLink(baseUrl, url)
+						const { links } = await scrapeNewsLink(baseUrl, url)
 
-						if (Array.isArray(data) && data.length > 0) {
+						context.log('Printing links', links)
+
+						if (Array.isArray(links) && links.length > 0) {
 							//   console.log("news link", newsLinks);
-							data.map(async link => {
+							for (const link of links) {
 								const content = await scrapeNewsContent(`${link.url}`, logoLink)
 								if (content && content.title && sourceId) {
 									content.source = sourceId
@@ -42,11 +49,11 @@ module.exports = async function(context, myTimer) {
 										context.log('article saved successfully!!!!')
 									}
 								}
-							})
+							}
 						}
-					})
+					}
 				}
-			})
+			}
 		}
 	} catch (error) {
 		context.log('error occured here', error)
