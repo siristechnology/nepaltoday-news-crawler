@@ -4,19 +4,14 @@
 		"es6": true,
 		"node": true
 	},
-	"extends": "standard",
-	"globals": {
-		"Atomics": "readable",
-		"SharedArrayBuffer": "readable"
-	},
+	"extends": ["standard", "plugin:prettier/recommended"],
+	"plugins": ["prettier"],
 	"parserOptions": {
 		"ecmaVersion": 2018
 	},
 	"rules": {
-		"indent": [
-			"error",
-			"tab"
-		],
+		"prettier/prettier": ["error"],
+		"indent": ["error","tab"],
 		"no-extra-semi": "off",
 		"no-tabs": "off",
 		"semi": "off"

@@ -1,3 +1,3 @@
-var newsCrawler = require("./NewsCrawlerTrigger");
+var newsCrawler = require('./NewsCrawlerTrigger')
 
-newsCrawler(console, {});
+newsCrawler(console, {})
