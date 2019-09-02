@@ -5,7 +5,6 @@
 
 trigger:
   - master
-  - nep-26-scrape-category-excerpt
 
 variables:
   # Azure Resource Manager connection created during pipeline creation
