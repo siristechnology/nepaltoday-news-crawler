@@ -1,6 +1,6 @@
 const selector = {
-	KANTIPUR:
+	KANTIPUR: 'article h2>a'
 }
 module.exports={
-
+	selector
 }

@@ -10,11 +10,11 @@ const scrapeNewsLink = async (baseUrl, url, context) => {
 		case KANTIPUR:
 			return scrapeKantipurNewsLink(url, context)
 		case SETOPATI:
-			return scrapeSetoPatiLink(url)
+			return scrapeSetoPatiLink(url, context)
 		case RATOPATI:
-			return scrapeRatoPatiLink(url)
+			return scrapeRatoPatiLink(url, context)
 		case DAINIK_KHABAR:
-			return scrapeDainikNepalLinks(url)
+			return scrapeDainikNepalLinks(url, context)
 		default:
 			return {
 				error: {
@@ -68,9 +68,9 @@ const scrapeSetoPatiLink = (url, context) => {
 			} else {
 				let $ = cheerio.load(body)
 				const links = []
-				$('article').each(function(index) {
+				$('.items').each(function(index) {
 					const link = $(this)
-						.find('.items > a')
+						.find('a')
 						.attr('href')
 					links.push(link)
 				})
@@ -97,9 +97,9 @@ const scrapeDainikNepalLinks = (url, context) => {
 			} else {
 				let $ = cheerio.load(body)
 				const links = []
-				$('article').each(function(index) {
+				$('.news_loop').each(function(index) {
 					const link = $(this)
-						.find('.news_loop a')
+						.find('a')
 						.attr('href')
 					links.push(link)
 				})
@@ -126,9 +126,9 @@ const scrapeRatoPatiLink = (url, context) => {
 			} else {
 				let $ = cheerio.load(body)
 				const links = []
-				$('article').each(function(index) {
+				$('.item-content').each(function(index) {
 					const link = $(this)
-						.find('.item-content  a')
+						.find('  a')
 						.attr('href')
 					links.push(`https://ratopati.com${link}`)
 				})
@@ -141,80 +141,6 @@ const scrapeRatoPatiLink = (url, context) => {
 		})
 	})
 }
-
-// const scrapeSetoPatiLink = async url => {
-// 	const browser = await puppeteer.launch()
-// 	const page = await browser.newPage()
-// 	await page.goto(url, { timeout: 0 })
-
-// 	const scrapedData = await page.evaluate(() =>
-// 		Array.from(document.querySelectorAll('.big-feature > a, .items > a '))
-// 			.slice(0, 1)
-// 			.map(link => ({
-// 				url: link.getAttribute('href')
-// 			}))
-// 	)
-
-// 	await page.close()
-// 	await browser.close()
-// 	return { error: false, links: scrapedData }
-// }
-
-// const scrapeRatoPatiLink = async url => {
-// 	try {
-// 		const browser = await puppeteer.launch()
-// 		const page = await browser.newPage()
-// 		await page.goto(url, { timeout: 0 })
-
-// 		const scrapedData = await page.evaluate(() =>
-// 			Array.from(document.querySelectorAll('.item-content  a'))
-// 				.slice(0, 1)
-// 				.map(link => ({
-// 					url: `https://ratopati.com${link.getAttribute('href')}`
-// 				}))
-// 		)
-
-// 		await page.close()
-// 		await browser.close()
-// 		return { error: false, links: scrapedData }
-// 	} catch (err) {
-// 		return {
-// 			error: {
-// 				status: true,
-// 				stack: err
-// 			},
-// 			links: null
-// 		}
-// 	}
-// }
-
-// const scrapeDainikNepalLinks = async url => {
-// 	try {
-// 		const browser = await puppeteer.launch()
-// 		const page = await browser.newPage()
-// 		await page.goto(url, { timeout: 0 })
-
-// 		const scrapedData = await page.evaluate(() =>
-// 			Array.from(document.querySelectorAll('.news_loop a'))
-// 				.slice(0, 1)
-// 				.map(link => ({
-// 					url: link.getAttribute('href')
-// 				}))
-// 		)
-
-// 		await page.close()
-// 		await browser.close()
-// 		return { error: false, links: scrapedData }
-// 	} catch (err) {
-// 		return {
-// 			error: {
-// 				status: true,
-// 				stack: err
-// 			},
-// 			links: null
-// 		}
-// 	}
-// }
 
 module.exports = {
 	scrapeNewsLink
