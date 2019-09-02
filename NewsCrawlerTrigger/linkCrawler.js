@@ -1,12 +1,13 @@
 const puppeteer = require('puppeteer')
+const Crawler = require('crawler')
 process.setMaxListeners(Infinity)
 const { newsPortalLink } = require('../constants/portal')
 const { KANTIPUR, SETOPATI, RATOPATI, DAINIK_KHABAR } = newsPortalLink
 
-const scrapeNewsLink = async (baseUrl, url) => {
+const scrapeNewsLink = async (baseUrl, url, context) => {
 	switch (baseUrl) {
 		case KANTIPUR:
-			return scrapeKantipurNewsLink(url)
+			return scrapeKantipurNewsLink(url, context)
 		case SETOPATI:
 			return scrapeSetoPatiLink(url)
 		case RATOPATI:
@@ -23,9 +24,8 @@ const scrapeNewsLink = async (baseUrl, url) => {
 	}
 }
 
-const scrapeKantipurNewsLink = async url => {
+const scrapeKantipurNewsLink = async (url, context) => {
 	try {
-		const browser = await puppeteer.launch()
 		const page = await browser.newPage()
 		await page.goto(url, { timeout: 0 })
 
