@@ -48,10 +48,10 @@ module.exports = async function(context, myTimer) {
 			if (tweets && tweets.length > 0) {
 				sortAndSaveTweets(tweets, user)
 			} else {
-				context.error('error on getting tweets !!!!!!!!!!!!!!!!!')
+				context.log('error on getting tweets !!!!!!!!!!!!!!!!!')
 			}
 		} catch (error) {
-			context.error(error)
+			context.log('error occured', error)
 		}
 	}
 
@@ -64,6 +64,6 @@ module.exports = async function(context, myTimer) {
 			}
 		}
 	} catch (error) {
-		context.error(error)
+		context.log(error)
 	}
 }
