@@ -28,13 +28,17 @@ module.exports = async function(context, myTimer) {
 
 						const categoryName = category.name
 						const url = `${baseUrl}${category.path}`
-						const { links } = await scrapeNewsLink(baseUrl, url, context)
+
+						const { error, links } = await scrapeNewsLink(baseUrl, url, context)
+						if (error) {
+							context.log('Error occured ', error)
+						}
 
 						context.log('Printing links', links)
 
 						if (Array.isArray(links) && links.length > 0) {
 							for (const link of links) {
-								const content = await scrapeNewsContent(`${link.url}`, logoLink,context)
+								const content = await scrapeNewsContent(`${link.url}`, logoLink, context)
 								if (content && content.title && sourceId) {
 									content.source = sourceId
 									content.createdDate = new Date()
