@@ -128,7 +128,7 @@ const scrapeRatoPatiLink = (url, context) => {
 				const links = []
 				$('.item-content').each(function(index) {
 					const link = $(this)
-						.find('  a')
+						.find('a')
 						.attr('href')
 					links.push(`https://ratopati.com${link}`)
 				})
