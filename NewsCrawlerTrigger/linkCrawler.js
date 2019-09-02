@@ -29,7 +29,6 @@ const scrapeKantipurNewsLink = (url, context) => {
 	return new Promise((resolve, reject) => {
 		request(url, function(err, res, body) {
 			if (err) {
-				context.log('error', err)
 				reject({
 					error: {
 						status: true,
@@ -44,7 +43,6 @@ const scrapeKantipurNewsLink = (url, context) => {
 					const link = $(this)
 						.find('h2>a')
 						.attr('href')
-					context.log(link) //link for smartphone
 					links.push(`https://ekantipur.com${link}`)
 				})
 
