@@ -23,6 +23,7 @@
     "dotenv": "^8.1.0",
     "html-entities": "^1.2.1",
     "ip": "1.1.5",
+    "jest": "^24.9.0",
     "nepaltoday-db-service": "github:siristechnology/nepaltoday-db-service",
     "request": "^2.88.0",
     "twitter": "^1.7.1"
