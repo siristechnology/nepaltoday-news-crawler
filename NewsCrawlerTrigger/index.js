@@ -3,6 +3,8 @@ module.exports = async function(context, myTimer) {
 	const { newsDbService } = require('nepaltoday-db-service')
 	const { scrapeNewsLink } = require('./linkCrawler')
 	const { getNewsContent } = require('./content-crawler')
+	const { url: URL } = require('./config/url')
+	const { scrapeNewsContent } = require('./ContentCrawler')
 
 	const ipAddress = require('ip').address()
 
@@ -38,7 +40,12 @@ module.exports = async function(context, myTimer) {
 
 						if (Array.isArray(links) && links.length > 0) {
 							for (const link of links) {
-								const content = await getNewsContent(`${link}`, logoLink, baseUrl, context)
+								let content
+								if (baseUrl === URL.RATOPATI || baseUrl === URL.KANTIPUR) {
+									content = await getNewsContent(`${link}`, logoLink, baseUrl, context)
+								}
+								// TODO , remove this section once selectro for all sites are well defined
+								content = await scrapeNewsContent(`${link}`, logoLink, context)
 								context.log('content here', content)
 								if (content && content.title && sourceId) {
 									content.source = sourceId
