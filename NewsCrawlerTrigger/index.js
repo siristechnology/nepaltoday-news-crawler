@@ -2,7 +2,7 @@ module.exports = async function(context, myTimer) {
 	var timeStamp = new Date().toISOString()
 	const { newsDbService } = require('nepaltoday-db-service')
 	const { scrapeNewsLink } = require('./linkCrawler')
-	const { scrapeNewsContent } = require('./ContentCrawler')
+	const { getNewsContent } = require('./content-crawler')
 
 	const ipAddress = require('ip').address()
 
@@ -38,7 +38,7 @@ module.exports = async function(context, myTimer) {
 
 						if (Array.isArray(links) && links.length > 0) {
 							for (const link of links) {
-								const content = await scrapeNewsContent(`${link}`, logoLink, context)
+								const content = await getNewsContent(`${link}`, logoLink, baseUrl, context)
 								context.log('content here', content)
 								if (content && content.title && sourceId) {
 									content.source = sourceId

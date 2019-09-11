@@ -1,5 +1,8 @@
 const Mercury = require('@postlight/mercury-parser')
 const Entities = require('html-entities').AllHtmlEntities
+const { url } = require('./config/url')
+const { selector } = require('./config/selector')
+const manualScrapper = require('./manual-scrapper')
 
 const getContent = content => {
 	const entities = new Entities()
@@ -12,7 +15,16 @@ const getContent = content => {
 		.slice(0, 1000)
 }
 
-const scrapeNewsContent = async (link, logoLink) => {
+const getTitle = async (link, baseUrl, context) => {
+	if (baseUrl === url.RATOPATI) {
+		const { headline } = await manualScrapper(link, selector.ratopati)
+		console.log('rato pati headings are', headline)
+		return headline
+	}
+	return 'hello world'
+}
+
+const scrapeNewsContent = async (link, logoLink, context) => {
 	try {
 		const scrappedNews = await Mercury.parse(link)
 		if (scrappedNews) {
