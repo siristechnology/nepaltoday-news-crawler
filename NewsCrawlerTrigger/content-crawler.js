@@ -16,6 +16,18 @@ const getNewsContent = async (link, logoLink, baseUrl, context) => {
 				return data
 			}
 		}
+		if (baseUrl === url.SETOPATI) {
+			const { error, data } = await manualScrapper(link, logoLink, selector.setopati, context)
+			if (!error) {
+				return data
+			}
+		}
+		if (baseUrl === url.DAINIK_NEPAL) {
+			const { error, data } = await manualScrapper(link, logoLink, selector.dainik, context)
+			if (!error) {
+				return data
+			}
+		}
 		return null
 	} catch (error) {
 		return null
