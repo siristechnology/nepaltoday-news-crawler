@@ -12,7 +12,16 @@
 		"ecmaVersion": 2018
 	},
 	"rules": {
-		"prettier/prettier": ["error"],
+		"prettier/prettier": [
+			"error",
+			{
+				"tabWidth": 4,
+				"useTabs": true,
+				"singleQuote": true,
+				"semi": false,
+				"printWidth": 120
+			}
+		],
 		"indent": ["error", "tab", { "SwitchCase": 1 }],
 		"no-extra-semi": "off",
 		"no-tabs": "off",
