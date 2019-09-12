@@ -2,10 +2,12 @@
 	"env": {
 		"commonjs": true,
 		"es6": true,
-		"node": true
+		"node": true,
+		"jest": true
 	},
 	"extends": ["standard", "plugin:prettier/recommended"],
 	"plugins": ["prettier"],
+	"parser": "babel-eslint",
 	"parserOptions": {
 		"ecmaVersion": 2018
 	},
@@ -14,6 +16,7 @@
 		"indent": ["error", "tab", { "SwitchCase": 1 }],
 		"no-extra-semi": "off",
 		"no-tabs": "off",
-		"semi": "off"
+		"semi": "off",
+		"prefer-promise-reject-errors": "off"
 	}
 }
