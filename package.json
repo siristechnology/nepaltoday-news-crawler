@@ -1,51 +1,51 @@
 {
-  "name": "nepaltoday",
-  "version": "1.0.0",
-  "description": "Mobile App for the news",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js",
-    "lint": "eslint \"**/*.{js,jsx}\"",
-    "format": "pretty-quick",
-    "test": "jest"
-  },
-  "keywords": [
-    "Mobile",
-    "App",
-    "News",
-    "Online",
-    "news"
-  ],
-  "author": "NepalToday",
-  "license": "ISC",
-  "dependencies": {
-    "@postlight/mercury-parser": "^2.1.1",
-    "cheerio": "^1.0.0-rc.3",
-    "crawler": "^1.2.0",
-    "dotenv": "^8.1.0",
-    "html-entities": "^1.2.1",
-    "ip": "1.1.5",
-    "nepaltoday-db-service": "github:siristechnology/nepaltoday-db-service",
-    "request": "^2.88.0",
-    "twitter": "^1.7.1"
-  },
-  "devDependencies": {
-    "@babel/core": "7.6.0",
-    "@babel/polyfill": "7.6.0",
-    "@babel/preset-env": "7.6.0",
-    "babel-loader": "^8.0.6",
-    "babel-eslint": "10.0.3",
-    "babel-jest": "24.9.0",
-    "babel-preset-latest": "6.24.1",
-    "eslint": "5.14.0",
-    "eslint-config-prettier": "6.1.0",
-    "eslint-config-standard": "12.0.0",
-    "eslint-plugin-import": "2.16.0",
-    "eslint-plugin-node": "8.0.1",
-    "eslint-plugin-prettier": "3.1.0",
-    "eslint-plugin-promise": "4.0.1",
-    "eslint-plugin-standard": "4.0.0",
-    "jest": "^24.9.0",
-    "prettier": "1.18.2"
-  }
+	"name": "nepaltoday",
+	"version": "1.0.0",
+	"description": "Mobile App for the news",
+	"main": "index.js",
+	"scripts": {
+		"start": "node index.js",
+		"lint": "eslint \"**/*.{js,jsx}\"",
+		"format": "pretty-quick",
+		"test": "jest"
+	},
+	"keywords": [
+		"Mobile",
+		"App",
+		"News",
+		"Online",
+		"news"
+	],
+	"author": "NepalToday",
+	"license": "ISC",
+	"dependencies": {
+		"@postlight/mercury-parser": "^2.1.1",
+		"cheerio": "^1.0.0-rc.3",
+		"crawler": "^1.2.0",
+		"dotenv": "^8.1.0",
+		"html-entities": "^1.2.1",
+		"ip": "1.1.5",
+		"nepaltoday-db-service": "github:siristechnology/nepaltoday-db-service",
+		"request": "^2.88.0",
+		"twitter": "^1.7.1"
+	},
+	"devDependencies": {
+		"@babel/core": "7.6.0",
+		"@babel/polyfill": "7.6.0",
+		"@babel/preset-env": "7.6.0",
+		"babel-loader": "^8.0.6",
+		"babel-eslint": "10.0.3",
+		"babel-jest": "24.9.0",
+		"babel-preset-latest": "6.24.1",
+		"eslint": "5.14.0",
+		"eslint-config-prettier": "6.1.0",
+		"eslint-config-standard": "12.0.0",
+		"eslint-plugin-import": "2.16.0",
+		"eslint-plugin-node": "8.0.1",
+		"eslint-plugin-prettier": "3.1.0",
+		"eslint-plugin-promise": "4.0.1",
+		"eslint-plugin-standard": "4.0.0",
+		"jest": "^24.9.0",
+		"prettier": "1.18.2"
+	}
 }

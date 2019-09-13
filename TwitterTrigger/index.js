@@ -61,7 +61,7 @@ module.exports = async function(context, myTimer) {
 				name: tweet.user.name,
 				handle: tweet.user.screen_name,
 				description: tweet.user.description,
-				profile_image: tweet.user.profile_background_image_url_https
+				profileImage: tweet.user.profile_image_url_https
 			}))
 
 		context.log('tweets here', tweets)
