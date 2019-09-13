@@ -29,4 +29,5 @@ describe('Twitter Trigger', () => {
 		console.log('tweets here', tweets)
 		expect(tweets.length).toBeGreaterThan(0)
 	})
+	// TODO for checking local functions as well
 })
