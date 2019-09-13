@@ -3,31 +3,35 @@ module.exports = async function(context, myTimer) {
 	const { TweetDbService } = require('nepaltoday-db-service')
 	const Twitter = require('twitter')
 
-	const { TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, BEARER_ACCESS_TOKEN } = require('../config/env')
+	const {
+		TWITTER_CONSUMER_KEY,
+		TWITTER_CONSUMER_SECRET,
+		TWITTER_ACCESS_TOKEN,
+		TWITTER_ACCESS_TOKEN_SECRET
+	} = require('../config/env')
 
 	const client = new Twitter({
 		consumer_key: TWITTER_CONSUMER_KEY,
 		consumer_secret: TWITTER_CONSUMER_SECRET,
-		bearer_token: BEARER_ACCESS_TOKEN
+		access_token_key: TWITTER_ACCESS_TOKEN,
+		access_token_secret: TWITTER_ACCESS_TOKEN_SECRET
 	})
 
 	async function sortAndSaveTweets(tweets, user) {
-		const filterdTweets = Array.from(tweets)
-			.filter(tweet => tweet.in_reply_to_status_id === null)
-			.map(tweet => {
-				return {
-					...tweet,
-					twitterHandle: user._id
-				}
-			})
+		const filterdTweets = Array.from(tweets).map(tweet => {
+			return {
+				...tweet,
+				twitterHandle: user._id
+			}
+		})
 
 		const savedTweets = await TweetDbService.saveTweets(filterdTweets)
 		if (savedTweets) {
-			context.done()
+			context.log('tweet saved successfully')
 		}
 	}
 
-	function getTweets(handle) {
+	function searchTweets(handle) {
 		return new Promise((resolve, reject) => {
 			let params = { q: `${handle}` }
 			client.get('search/tweets', params, function(error, tweets, response) {
@@ -41,10 +45,33 @@ module.exports = async function(context, myTimer) {
 		})
 	}
 
+	async function getUserTimeline(handle) {
+		const params = {
+			screen_name: `${handle}`,
+			count: 10,
+			exclude_replies: true,
+			include_rts: false
+		}
+		const rawTweets = await client.get('statuses/user_timeline', params)
+		const tweets =
+			rawTweets &&
+			rawTweets.map(tweet => ({
+				created_at: tweet.created_at,
+				text: tweet.text,
+				name: tweet.user.name,
+				handle: tweet.user.screen_name,
+				description: tweet.user.description,
+				profile_image: tweet.user.profile_background_image_url_https
+			}))
+
+		context.log('tweets here', tweets)
+		return tweets
+	}
+
 	async function getTweetByHandle(user) {
 		try {
 			const handle = user.handle
-			const tweets = await getTweets(handle)
+			const tweets = await getUserTimeline(handle)
 			if (tweets && tweets.length > 0) {
 				sortAndSaveTweets(tweets, user)
 			} else {
