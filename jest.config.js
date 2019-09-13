@@ -10,5 +10,6 @@ module.exports = {
 	transform: {
 		'^.+\\.(js|jsx|mjs)$': '<rootDir>/node_modules/babel-jest'
 	},
-	setupFiles: ['<rootDir>/node_modules/regenerator-runtime/runtime']
+	setupFiles: ['<rootDir>/node_modules/regenerator-runtime/runtime'],
+	setupFilesAfterEnv: ['<rootDir>/jest.setup.js']
 }
