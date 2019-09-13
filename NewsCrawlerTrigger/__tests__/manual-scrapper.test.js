@@ -11,4 +11,31 @@ describe('manual-scrapper', () => {
 		expect(data.content).not.toBe(null)
 		expect(error).toBeFalsy()
 	})
+	it('manualScrapper should scrape setopati', async () => {
+		const link = 'https://www.setopati.com/social/189567'
+		const logoLink = 'test logoLink'
+
+		const { error, data } = await manualScrapper(link, logoLink, selector.setopati)
+
+		expect(data.content).not.toBe(null)
+		expect(error).toBeFalsy()
+	})
+	it('manualScrapper should scrape ratopati', async () => {
+		const link = 'https://ratopati.com/story/99093/2019/9/3/banana-business'
+		const logoLink = 'test logoLink'
+
+		const { error, data } = await manualScrapper(link, logoLink, selector.ratopati)
+
+		expect(data.content).not.toBe(null)
+		expect(error).toBeFalsy()
+	})
+	it('manualScrapper should scrape dainik khavar', async () => {
+		const link = 'https://www.dainiknepal.com/2019/09/411725.html'
+		const logoLink = 'test logoLink'
+
+		const { error, data } = await manualScrapper(link, logoLink, selector.ratopati)
+
+		expect(data.content).not.toBe(null)
+		expect(error).toBeFalsy()
+	})
 })
