@@ -28,6 +28,6 @@ describe('Twitter Trigger', () => {
 	// 	}
 	// 	const tweets = await client.get('statuses/user_timeline', params)
 	// 	expect(tweets.length).toBeGreaterThan(0)
-	})
+	// })
 	// TODO for checking local functions as well
 })
