@@ -14,10 +14,13 @@ module.exports = function manualScrapper(link, logoLink, selector, context) {
 			} else {
 				let $ = cheerio.load(body)
 				const title = $(selector.TITLE).text()
-				const shortDescription = $(selector.EXCERPT).text()
+				const shortDescription = $(selector.EXCERPT)
+					.text()
+					.slice(0, 300)
 				const imageLink = $(selector.LEAD_IMAGE.PATH).attr(selector.LEAD_IMAGE.SELECTOR) || logoLink
 				const content = $(selector.CONTENT)
 					.text()
+					.trim()
 					.slice(0, 2000)
 				const publishedDate = new Date()
 				resolve({

@@ -19,16 +19,15 @@ describe('Twitter Trigger', () => {
 		expect(client).not.toBe(false)
 	})
 	// we are commenting this for now
-	// it('get user timeline', async () => {
-	// 	const params = {
-	// 		screen_name: 'kpsharmaoli',
-	// 		count: 10,
-	// 		exclude_replies: true,
-	// 		include_rts: false
-	// 	}
-	// 	const tweets = await client.get('statuses/user_timeline', params)
-	// 	console.log('tweets here', tweets)
-	// 	expect(tweets.length).toBeGreaterThan(0)
-	// })
+	it('get user timeline', async () => {
+		const params = {
+			screen_name: 'kpsharmaoli',
+			count: 10,
+			exclude_replies: true,
+			include_rts: false
+		}
+		const tweets = await client.get('statuses/user_timeline', params)
+		expect(tweets.length).toBeGreaterThan(0)
+	})
 	// TODO for checking local functions as well
 })
