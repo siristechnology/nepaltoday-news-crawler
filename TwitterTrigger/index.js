@@ -56,7 +56,7 @@ module.exports = async function(context, myTimer) {
 		const tweets =
 			rawTweets &&
 			rawTweets.map(tweet => ({
-				created_at: tweet.created_at,
+				publishedDate: tweet.created_at,
 				text: tweet.text,
 				name: tweet.user.name,
 				handle: tweet.user.screen_name,
@@ -64,7 +64,6 @@ module.exports = async function(context, myTimer) {
 				profileImage: tweet.user.profile_image_url_https
 			}))
 
-		context.log('tweets here', tweets)
 		return tweets
 	}
 
