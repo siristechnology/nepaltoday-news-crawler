@@ -24,7 +24,7 @@ module.exports = async function(context, myTimer) {
 				twitterHandle: user._id
 			}
 		})
-
+		console.log('for testing purpose only')
 		const savedTweets = await TweetDbService.saveTweets(filterdTweets)
 		if (savedTweets) {
 			context.log('tweet saved successfully')
@@ -57,6 +57,7 @@ module.exports = async function(context, myTimer) {
 			rawTweets &&
 			rawTweets.map(tweet => ({
 				publishedDate: tweet.created_at,
+				tweetId: tweet.id_str || tweet.id,
 				text: tweet.text,
 				name: tweet.user.name,
 				handle: tweet.user.screen_name,
