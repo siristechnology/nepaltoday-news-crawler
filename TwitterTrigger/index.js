@@ -24,7 +24,6 @@ module.exports = async function(context, myTimer) {
 				twitterHandle: user._id
 			}
 		})
-		console.log('for testing purpose only')
 		const savedTweets = await TweetDbService.saveTweets(filterdTweets)
 		if (savedTweets) {
 			context.log('tweet saved successfully')
