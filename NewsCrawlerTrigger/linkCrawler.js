@@ -26,7 +26,7 @@ const scrapeNewsLink = async (baseUrl, url, context) => {
 	}
 }
 
-const scrapeKantipurNewsLink = (url, context) => {
+const scrapeKantipurNewsLink = (url) => {
 	return new Promise((resolve, reject) => {
 		request(url, function(err, res, body) {
 			if (err) {
@@ -55,7 +55,7 @@ const scrapeKantipurNewsLink = (url, context) => {
 		})
 	})
 }
-const scrapeSetoPatiLink = (url, context) => {
+const scrapeSetoPatiLink = (url) => {
 	return new Promise((resolve, reject) => {
 		request(url, function(err, res, body) {
 			if (err) {
@@ -84,7 +84,7 @@ const scrapeSetoPatiLink = (url, context) => {
 		})
 	})
 }
-const scrapeDainikNepalLinks = (url, context) => {
+const scrapeDainikNepalLinks = (url) => {
 	return new Promise((resolve, reject) => {
 		request(url, function(err, res, body) {
 			if (err) {
@@ -113,7 +113,7 @@ const scrapeDainikNepalLinks = (url, context) => {
 		})
 	})
 }
-const scrapeRatoPatiLink = (url, context) => {
+const scrapeRatoPatiLink = (url) => {
 	return new Promise((resolve, reject) => {
 		request(url, function(err, res, body) {
 			if (err) {
