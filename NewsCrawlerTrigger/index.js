@@ -30,7 +30,7 @@ module.exports = async function(context, myTimer) {
 						const categoryName = category.name
 						const url = `${baseUrl}${category.path}`
 
-						const { error, links } = await scrapeNewsLink(baseUrl, url, context)
+						const { error, links } = await scrapeNewsLink(baseUrl, url)
 						if (error) {
 							context.log('Error occured getting news lnks ', error)
 						}
