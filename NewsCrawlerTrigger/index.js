@@ -20,6 +20,7 @@ module.exports = async function(context, myTimer) {
 				const categories = source.category
 
 				if (categories) {
+					const createdDate = new Date()
 					context.log('Printing categories', categories)
 					context.log('Printing categories.length', categories.length)
 
@@ -29,7 +30,7 @@ module.exports = async function(context, myTimer) {
 						const categoryName = category.name
 						const url = `${baseUrl}${category.path}`
 
-						const { error, links } = await scrapeNewsLink(baseUrl, url, context)
+						const { error, links } = await scrapeNewsLink(baseUrl, url)
 						if (error) {
 							context.log('Error occured getting news lnks ', error)
 						}
@@ -43,8 +44,8 @@ module.exports = async function(context, myTimer) {
 								context.log('content here', content)
 								if (content && content.title && sourceId) {
 									content.source = sourceId
-									content.createdDate = new Date()
-									content.modifiedDate = new Date()
+									content.createdDate = createdDate
+									content.modifiedDate = createdDate
 									content.isHeadline = true // TODO: check if h1 or h2
 									content.hostIp = ipAddress
 									content.category = categoryName
