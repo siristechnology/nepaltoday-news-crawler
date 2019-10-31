@@ -10,6 +10,14 @@ module.exports = async function(context, myTimer) {
 		context.log('JavaScript is running late!')
 	}
 
+	const getCategoryName = category => {
+		if (category === 'news' || category === 'politics') {
+			return 'news'
+		} else {
+			return category
+		}
+	}
+
 	try {
 		const sources = await newsDbService.getAllSources()
 		if (sources) {
@@ -21,8 +29,6 @@ module.exports = async function(context, myTimer) {
 
 				if (categories) {
 					const crawlTime = new Date()
-					context.log('Printing categories', categories)
-					context.log('Printing categories.length', categories.length)
 
 					for (const category of categories) {
 						context.log('Printing category', category)
@@ -35,13 +41,10 @@ module.exports = async function(context, myTimer) {
 							context.log('Error occured getting news lnks ', error)
 						}
 
-						context.log('Printing links', links)
-
 						if (Array.isArray(links) && links.length > 0) {
 							for (const link of links) {
 								const content = await getNewsContent(`${link}`, logoLink, baseUrl, context)
 
-								context.log('content here', content)
 								if (content && content.title && sourceId) {
 									content.source = sourceId
 									content.createdDate = crawlTime
@@ -49,7 +52,7 @@ module.exports = async function(context, myTimer) {
 									content.publishedDate = crawlTime
 									content.isHeadline = true // TODO: check if h1 or h2
 									content.hostIp = ipAddress
-									content.category = categoryName
+									content.category = getCategoryName(categoryName)
 									const savedArticle = await newsDbService.saveArticle(content)
 									if (savedArticle) {
 										context.log('article saved successfully!!!!')
