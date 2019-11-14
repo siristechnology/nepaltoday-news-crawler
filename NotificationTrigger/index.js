@@ -1,7 +1,9 @@
 module.exports = async function(context, myTimer) {
 	const moment = require('moment-timezone')
+	const { verifyNoticiableTime } = require('./time')
+
 	const timeStamp = new Date().toISOString()
-	const { userDbService } = require('nepaltoday-db-service')
+	const { userDbService, newsDbService } = require('nepaltoday-db-service')
 
 	if (myTimer.IsPastDue) {
 		context.log('________________JavaScript is running late!_______________')
@@ -22,8 +24,14 @@ module.exports = async function(context, myTimer) {
 			})
 			console.log('_____________userWithCurrentTime__________', userWithCurrentTime)
 			if (userWithCurrentTime) {
-				// Todo: get the latest news from db
-				// check if time is 9pm if it is send notification using firebase api
+				const latestArticle = await newsDbService.getLatestNewsArticle()
+				const noticiableUsers = userWithCurrentTime.map(user => {
+					if (verifyNoticiableTime(user.currentTime)) {
+						// send notification
+					}
+				})
+				console.log('_____________latestArticle__________', latestArticle)
+				console.log('_____________noticiableUsers__________', noticiableUsers)
 			}
 		}
 	} catch (error) {
