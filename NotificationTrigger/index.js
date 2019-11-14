@@ -23,14 +23,11 @@ module.exports = async function(context, myTimer) {
 					currentTime
 				}
 			})
-			console.log('_____________userWithCurrentTime__________', userWithCurrentTime)
 			if (userWithCurrentTime) {
 				const latestArticle = await newsDbService.getLatestNewsArticle()
-				console.log('_____________latestArticle__________', latestArticle)
 				if (latestArticle) {
 					for (const user of userWithCurrentTime) {
 						const eligibleTime = verifyNoticiableTime(user.currentTime)
-						console.log('_____________eligibleTime__________', eligibleTime)
 						if (eligibleTime) {
 							const data = {
 								notification: {
@@ -39,16 +36,17 @@ module.exports = async function(context, myTimer) {
 								},
 								to: user.fcmToken
 							}
-							console.log('_____________data__________', data)
 							const response = await post(undefined, data)
-							console.log('_____________response__________', response)
+							if (response.status === 200) {
+								context.log('_____________notificaton send successfully__________')
+							}
 						}
 					}
 				}
 			}
 		}
 	} catch (error) {
-		console.log('_____________error__________', error)
+		context.log('_____________error__________', error)
 	}
 
 	context.log('JavaScript timer trigger function ran!', timeStamp)
