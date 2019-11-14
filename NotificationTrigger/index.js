@@ -1,9 +1,9 @@
 module.exports = async function(context, myTimer) {
 	const moment = require('moment-timezone')
-	const { verifyNoticiableTime } = require('./time')
-	const { post } = require('./http')
-
 	const timeStamp = new Date().toISOString()
+
+	const { post } = require('./http')
+	const { verifyNoticiableTime } = require('./time')
 	const { userDbService, newsDbService } = require('nepaltoday-db-service')
 
 	if (myTimer.IsPastDue) {
