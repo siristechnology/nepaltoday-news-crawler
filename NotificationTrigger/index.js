@@ -1,6 +1,7 @@
 module.exports = async function(context, myTimer) {
 	const moment = require('moment-timezone')
 	const { verifyNoticiableTime } = require('./time')
+	const { post } = require('./http')
 
 	const timeStamp = new Date().toISOString()
 	const { userDbService, newsDbService } = require('nepaltoday-db-service')
@@ -25,13 +26,25 @@ module.exports = async function(context, myTimer) {
 			console.log('_____________userWithCurrentTime__________', userWithCurrentTime)
 			if (userWithCurrentTime) {
 				const latestArticle = await newsDbService.getLatestNewsArticle()
-				const noticiableUsers = userWithCurrentTime.map(user => {
-					if (verifyNoticiableTime(user.currentTime)) {
-						// send notification
-					}
-				})
 				console.log('_____________latestArticle__________', latestArticle)
-				console.log('_____________noticiableUsers__________', noticiableUsers)
+				if (latestArticle) {
+					for (const user of userWithCurrentTime) {
+						const eligibleTime = verifyNoticiableTime(user.currentTime)
+						console.log('_____________eligibleTime__________', eligibleTime)
+						if (eligibleTime) {
+							const data = {
+								notification: {
+									title: latestArticle[0].title,
+									body: latestArticle[0].shortDescription
+								},
+								to: user.fcmToken
+							}
+							console.log('_____________data__________', data)
+							const response = await post(undefined, data)
+							console.log('_____________response__________', response)
+						}
+					}
+				}
 			}
 		}
 	} catch (error) {

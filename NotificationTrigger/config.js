@@ -1,5 +1,5 @@
-const NOTIFICATION_END_TIME = 2105
-const NOTIFICATION_START_TIME = 2100
+const NOTIFICATION_END_TIME = 2100
+const NOTIFICATION_START_TIME = 2000
 const FIREBASE_NOTIFICATION_URL = 'https://fcm.googleapis.com/fcm/send'
 
 module.exports = {

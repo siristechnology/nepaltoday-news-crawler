@@ -4291,10 +4291,10 @@ neo-async@^2.6.0:
   version "1.1.4"
   resolved "https://codeload.github.com/siristechnology/nepaltoday-db-service/tar.gz/40ef2b73143f83f50366fc91879b9baffd1d8826"
   dependencies:
-    "@babel/polyfill" "7.6.0"
+    "@babel/polyfill" "7.7.0"
     dotenv "^8.1.0"
-    mongodb "3.3.2"
-    mongoose "5.7.1"
+    mongodb "3.3.3"
+    mongoose "5.7.7"
 
 next-line@^1.1.0:
   version "1.1.0"
