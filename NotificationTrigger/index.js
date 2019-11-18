@@ -3,8 +3,8 @@ module.exports = async function(context, myTimer) {
 	const timeStamp = new Date().toISOString()
 
 	const { post } = require('./http')
-	const { verifyNoticiableTime } = require('./time')
-	const { userDbService, newsDbService } = require('nepaltoday-db-service')
+	const { verifyNoticiableTime, getStartEndTime } = require('./notificationTime')
+	const { userDbService, newsDbService, NotificationDbService } = require('nepaltoday-db-service')
 
 	if (myTimer.IsPastDue) {
 		context.log('________________JavaScript is running late!_______________')
@@ -25,8 +25,22 @@ module.exports = async function(context, myTimer) {
 			})
 			if (userWithCurrentTime) {
 				const latestArticle = await newsDbService.getLatestNewsArticle()
+				const todaysTimeFrame = getStartEndTime()
+
+				const todaysNotifications = await NotificationDbService.getNotifications({
+					createdAt: { $gte: todaysTimeFrame.startTime, $lt: todaysTimeFrame.endTime }
+				})
 				if (latestArticle) {
+					const notifications = []
 					for (const user of userWithCurrentTime) {
+						const isSent = todaysNotifications.find(
+							notification =>
+								String(notification.user) === String(user._id) &&
+								String(notification.article) === String(latestArticle[0]._id)
+						)
+						if (isSent) {
+							continue
+						}
 						const eligibleTime = verifyNoticiableTime(user.currentTime)
 						if (eligibleTime) {
 							const data = {
@@ -38,8 +52,18 @@ module.exports = async function(context, myTimer) {
 							}
 							const response = await post(undefined, data)
 							if (response.status === 200) {
-								context.log('_____________notificaton send successfully__________')
+								const payload = {
+									article: latestArticle[0]._id,
+									user: user._id
+								}
+								notifications.push(payload)
 							}
+						}
+					}
+					if (notifications.length > 0) {
+						const notificationResponse = await NotificationDbService.saveNotifications(notifications)
+						if (notificationResponse) {
+							console.log('_____________notifications are saved successfully__________')
 						}
 					}
 				}

@@ -28,7 +28,7 @@
 		"ip": "1.1.5",
 		"moment": "^2.24.0",
 		"moment-timezone": "^0.5.27",
-		"nepaltoday-db-service": "github:siristechnology/nepaltoday-db-service#latest-single-news",
+		"nepaltoday-db-service": "github:siristechnology/nepaltoday-db-service",
 		"request": "^2.88.0",
 		"twitter": "^1.7.1"
 	},
