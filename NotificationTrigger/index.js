@@ -63,7 +63,7 @@ module.exports = async function(context, myTimer) {
 					if (notifications.length > 0) {
 						const notificationResponse = await NotificationDbService.saveNotifications(notifications)
 						if (notificationResponse) {
-							console.log('_____________notifications are saved successfully__________')
+							context.log('_____________notifications are saved successfully__________')
 						}
 					}
 				}
