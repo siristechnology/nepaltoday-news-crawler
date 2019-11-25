@@ -1,5 +1,4 @@
 module.exports = async function(context, myTimer) {
-	var timeStamp = new Date().toISOString()
 	const { TweetDbService } = require('nepaltoday-db-service')
 	const Twitter = require('twitter')
 
@@ -84,8 +83,7 @@ module.exports = async function(context, myTimer) {
 	try {
 		const twitterHandles = await TweetDbService.getTwitterHandles()
 		if (twitterHandles) {
-			for (user of twitterHandles) {
-				context.log('user here', user)
+			for (const user of twitterHandles) {
 				await getTweetByHandle(user)
 			}
 		}

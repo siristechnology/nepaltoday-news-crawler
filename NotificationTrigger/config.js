@@ -1,6 +1,6 @@
 require('dotenv').config()
-const NOTIFICATION_END_TIME = 2105
-const NOTIFICATION_START_TIME = 2100
+const NOTIFICATION_END_TIME = 900
+const NOTIFICATION_START_TIME = 850
 const FIREBASE_NOTIFICATION_URL = 'https://fcm.googleapis.com/fcm/send'
 
 const FIREBASE_SERVER_KEY = process.env.FIREBASE_SERVER_KEY

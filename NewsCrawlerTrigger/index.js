@@ -39,6 +39,7 @@ module.exports = async function(context, myTimer) {
 						const { error, links } = await scrapeNewsLink(baseUrl, url)
 						if (error) {
 							context.log('Error occured getting news lnks ', error)
+							continue
 						}
 
 						if (Array.isArray(links) && links.length > 0) {
