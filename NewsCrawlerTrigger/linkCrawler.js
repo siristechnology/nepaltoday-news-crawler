@@ -4,7 +4,7 @@ const request = require('request')
 process.setMaxListeners(Infinity)
 
 const { newsPortalLink } = require('../constants/portal')
-const { KANTIPUR, SETOPATI, RATOPATI, DAINIK_KHABAR } = newsPortalLink
+const { KANTIPUR, SETOPATI, RATOPATI, DAINIK_KHABAR, ONLINE_KHABAR } = newsPortalLink
 
 const scrapeNewsLink = async (baseUrl, url) => {
 	switch (baseUrl) {
@@ -16,6 +16,8 @@ const scrapeNewsLink = async (baseUrl, url) => {
 			return scrapeRatoPatiLink(url)
 		case DAINIK_KHABAR:
 			return scrapeDainikNepalLinks(url)
+		case ONLINE_KHABAR:
+			return scrapeOnlineKhabar(url)
 		default:
 			return {
 				error: {
@@ -84,6 +86,7 @@ const scrapeSetoPatiLink = url => {
 		})
 	})
 }
+
 const scrapeDainikNepalLinks = url => {
 	return new Promise((resolve, reject) => {
 		request(url, function(err, res, body) {
@@ -113,6 +116,38 @@ const scrapeDainikNepalLinks = url => {
 		})
 	})
 }
+
+const scrapeOnlineKhabar = url => {
+	return new Promise((resolve, reject) => {
+		request(url, function(err, res, body) {
+			if (err) {
+				reject({
+					error: {
+						status: true,
+						stack: err
+					},
+					links: null
+				})
+			} else {
+				let $ = cheerio.load(body)
+				const links = []
+
+				$('.news_loop').each(function(index) {
+					const link = $(this)
+						.find('a')
+						.attr('href')
+					links.push(link)
+				})
+
+				resolve({
+					error: false,
+					links: links.slice(0, 2)
+				})
+			}
+		})
+	})
+}
+
 const scrapeRatoPatiLink = url => {
 	return new Promise((resolve, reject) => {
 		request(url, function(err, res, body) {
